@@ -15,7 +15,16 @@ AUDIO_DIR = DATA_DIR / "audio"             # extracted .mp3 (gitignored)
 SEGMENTS_DIR = DATA_DIR / "jsons"          # per-video Whisper segment transcripts
 CHUNKS_DIR = DATA_DIR / "merged_jsons"     # merged ~400-word overlapping chunks
 INDEX_DIR = DATA_DIR / "index"             # embeddings / vector store (gitignored)
-EMBEDDINGS_PATH = INDEX_DIR / "embeddings.joblib"
+
+# --- Vector store (Phase 1) ----------------------------------------------
+# ChromaDB replaces the old joblib DataFrame. Persistent = survives restarts,
+# loaded once, HNSW-indexed instead of brute-force cosine over the whole matrix.
+CHROMA_DIR = INDEX_DIR / "chroma"          # persistent Chroma store (gitignored)
+TRANSCRIPT_COLLECTION = "transcript"       # spoken-transcript chunks
+
+# --- Sparse index (Phase 1 build, Phase 2 query) -------------------------
+# rank_bm25 Okapi index over tokenized chunk texts, pickled alongside Chroma.
+BM25_PATH = INDEX_DIR / "bm25.pkl"
 
 # --- Chunking (ingest/chunk.py) ------------------------------------------
 MAX_WORDS = 400
@@ -31,7 +40,7 @@ EMBEDDING_MODEL = "bge-m3"
 OLLAMA_EMBED_URL = "http://localhost:11434/api/embed"
 
 # --- Generation (generation/answer.py) -----------------------------------
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-3.1-flash-lite"
 
 # --- Retrieval ------------------------------------------------------------
 TOP_K = 5

@@ -1,46 +1,61 @@
-"""Dense retrieval — embed the query, cosine-similarity vs all chunks, return top-k.
+"""Dense retrieval — embed the query, ANN search over the Chroma collection, top-k.
 
-Refactored from the old process_query.py: the `input()` and prompt.txt file-dump are
-GONE. This is now a clean, importable, testable function — which is exactly what the
-eval harness (roadmap Phase 3) and the API (Phase 5) will call.
+Phase 1 rewrite: the old joblib DataFrame + brute-force sklearn cosine is gone.
+We now query the persistent ChromaDB 'transcript' collection built by
+ingest/index.py. Chroma loads once (client cached) and uses its HNSW index, so
+this scales past the point where scanning the whole matrix would.
 
-ROADMAP Phase 2: this is the naive baseline ("dense" mode). You'll add sparse.py
-(BM25), fusion.py (RRF), and rerank.py (cross-encoder) alongside it.
+Returns a uniform list[dict] shape shared by every retriever (sparse, fusion,
+rerank) so the eval harness (Phase 3) can ablate over them interchangeably:
+    {id, video_id, start, end, text, score}
 """
 import numpy as np
-import pandas as pd
 import requests
-import joblib
-from sklearn.metrics.pairwise import cosine_similarity
+import chromadb
 
-from courselens.config import EMBEDDINGS_PATH, EMBEDDING_MODEL, OLLAMA_EMBED_URL, TOP_K
+from courselens.config import (
+    CHROMA_DIR, TRANSCRIPT_COLLECTION, EMBEDDING_MODEL, OLLAMA_EMBED_URL, TOP_K,
+)
 
-# Loaded once and cached so repeated queries don't re-read the file.
-_df_cache: pd.DataFrame | None = None
-
-
-def _load_index() -> pd.DataFrame:
-    global _df_cache
-    if _df_cache is None:
-        _df_cache = joblib.load(EMBEDDINGS_PATH)
-    return _df_cache
+_collection = None  # cached so repeated queries don't reopen the store
 
 
-def embed_query(query: str) -> np.ndarray:
+def _get_collection():
+    global _collection
+    if _collection is None:
+        client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+        _collection = client.get_collection(TRANSCRIPT_COLLECTION)
+    return _collection
+
+
+def embed_query(query: str) -> list[float]:
     r = requests.post(OLLAMA_EMBED_URL, json={"model": EMBEDDING_MODEL, "input": [query]})
     r.raise_for_status()
-    return np.array(r.json()["embeddings"][0]).reshape(1, -1)
+    return r.json()["embeddings"][0]
 
 
-def retrieve(query: str, k: int = TOP_K) -> pd.DataFrame:
-    """Return the top-k most similar chunks as a DataFrame (_id, Video_id, text, start, end)."""
-    df = _load_index()
-    q = embed_query(query)
-    sims = cosine_similarity(np.vstack(df["embedding"]), q).flatten()
-    top_idx = sims.argsort()[::-1][:k]
-    return df.iloc[top_idx][["_id", "Video_id", "text", "start", "end"]]
+def retrieve(query: str, k: int = TOP_K) -> list[dict]:
+    """Top-k most similar chunks by dense cosine similarity."""
+    col = _get_collection()
+    res = col.query(query_embeddings=[embed_query(query)], n_results=k)
+    ids = res["ids"][0]
+    docs = res["documents"][0]
+    metas = res["metadatas"][0]
+    dists = res["distances"][0]  # cosine distance; similarity = 1 - distance
+    out = []
+    for cid, doc, meta, dist in zip(ids, docs, metas, dists):
+        out.append({
+            "id": cid,
+            "video_id": meta["video_id"],
+            "start": meta["start"],
+            "end": meta["end"],
+            "text": doc,
+            "score": 1.0 - float(dist),
+        })
+    return out
 
 
 if __name__ == "__main__":
     question = input("Ask a question: ")
-    print(retrieve(question).to_json(orient="records", indent=2))
+    for i, c in enumerate(retrieve(question), 1):
+        print(f'{i}. [{c["id"]}] sim={c["score"]:.3f}  {c["text"][:90].strip()}...')

@@ -7,10 +7,10 @@ ROADMAP Phase 4: switch this to ask Gemini for STRUCTURED JSON
 ({"answer", "citations":[{video_id,start,end}], "grounded": bool}) and format the
 MM:SS timestamps in Python instead of in the prompt (more reliable).
 """
-import pandas as pd
+import json
 
 
-def build_prompt(query: str, context: pd.DataFrame) -> str:
+def build_prompt(query: str, context: list[dict]) -> str:
     return f"""
 You are an expert assistant for a React development course.
 
@@ -23,7 +23,7 @@ respond exactly with: "Please ask related questions."
 
 --------------------
 Retrieved Context:
-{context.to_json(orient="records")}
+{json.dumps(context)}
 --------------------
 
 User Query:
