@@ -1,0 +1,15 @@
+# --- Currently used (working baseline pipeline) ---
+openai-whisper
+requests
+pandas
+numpy
+scikit-learn
+joblib
+google-genai
+
+# --- To add as you build the roadmap phases (uncomment when you reach them) ---
+# chromadb              # Phase 1: real vector store
+# rank-bm25             # Phase 2: sparse/BM25 retrieval
+# sentence-transformers # Phase 2: cross-encoder reranker
+# fastapi               # Phase 5: serving layer
+# uvicorn               # Phase 5: ASGI server

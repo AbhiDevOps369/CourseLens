@@ -1,0 +1,2 @@
+{"question": "EXAMPLE — replace me. What is the useState hook used for?", "expected_chunk_ids": ["01_3"], "answerable": true}
+{"question": "EXAMPLE — an off-topic question to test refusal. What is the capital of France?", "expected_chunk_ids": [], "answerable": false}

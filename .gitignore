@@ -1,0 +1,27 @@
+# --- Environments (NEVER commit — multi-GB, machine-specific) ---
+whisper-env/
+.venv/
+venv/
+
+# --- Secrets ---
+.env
+
+# --- Large / regenerable data ---
+data/videos/
+data/audio/
+data/index/
+*.joblib
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+
+# --- OS ---
+.DS_Store
+
+# NOTE: data/jsons/ and data/merged_jsons/ (the transcripts) are intentionally
+# NOT ignored — that Whisper compute is expensive and worth keeping in the repo.
