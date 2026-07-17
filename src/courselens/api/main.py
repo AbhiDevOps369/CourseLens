@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from courselens.retrieval import retrieve
 from courselens.generation.answer import generate
+from courselens.generation.prompts import REFUSAL_PHRASE
 import time
 
 app = FastAPI(title="CourseLens")
@@ -26,4 +27,5 @@ def ask(req: AskRequest):
              "start": ch["start"], "end": ch["end"],
         })
     end=(time.perf_counter() - start)* 1000
-    return {"answer": result,"citations":citations,"latency_ms":end,"retrieved_chunks":chunks}
+    grounded = result.strip() != REFUSAL_PHRASE
+    return {"answer": result,"citations":citations,"latency_ms":end,"retrieved_chunks":chunks,"grounded":grounded}

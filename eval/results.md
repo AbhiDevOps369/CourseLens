@@ -14,6 +14,6 @@
 
 | Metric                     | Score |
 |----------------------------|-------|
-| Faithfulness (LLM-judge)   |       |
-| Answer relevance           |       |
-| Refusal accuracy (OOD)     |       |
+| Faithfulness (LLM-judge)   | 0.643 (9/14) |
+| Answer relevance           | 1.000 (14/14) |
+| Refusal accuracy (OOD)     | recall=1.00 (7/7), false-refusals=0.03 (1/35) |
