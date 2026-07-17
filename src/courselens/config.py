@@ -5,6 +5,15 @@ size, k values, or swap a model, change it HERE, not scattered across scripts.
 """
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+# Load .env into this process's environment (os.environ) as soon as config.py
+# is imported — which happens before almost anything else, since every module
+# depends on config. This replaces manually `export`-ing GOOGLE_API_KEY in
+# whatever terminal happens to be open; now it loads the same way every time,
+# from every entry point (CLI scripts, uvicorn, eval scripts).
+load_dotenv()
+
 # Project root = three levels up from this file (src/courselens/config.py -> repo root)
 ROOT = Path(__file__).resolve().parents[2]
 

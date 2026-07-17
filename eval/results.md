@@ -1,15 +1,14 @@
 # Evaluation results
 
-> Fill these tables with numbers from actually-run evals (never invented).
-> These tables get pasted into the README — they are what get you the interview.
+> Filled with numbers from an actually-run eval (eval/run_retrieval_eval.py).
 
 ## Retrieval ablation (Phase 3)
 
 | Retriever          | Recall@5 | Hit@1 | MRR@10 |
 |--------------------|----------|-------|--------|
-| Dense (bge-m3)     |          |       |        |
-| Hybrid (RRF)       |          |       |        |
-| Hybrid + reranker  |          |       |        |
+| Dense (bge-m3)     | 0.771    | 0.400 | 0.536  |
+| Hybrid (RRF)       | 0.771    | 0.571 | 0.652  |
+| Hybrid + reranker  | 0.771    | 0.486 | 0.614  |
 
 ## Generation quality (Phase 4)
 

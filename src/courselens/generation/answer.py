@@ -12,7 +12,7 @@ import os
 import google.genai as genai
 
 from courselens.config import GEMINI_MODEL, TOP_K
-from courselens.retrieval.dense import retrieve
+from courselens.retrieval import retrieve
 from courselens.generation.prompts import build_prompt
 
 _client: genai.Client | None = None
@@ -25,13 +25,28 @@ def _get_client() -> genai.Client:
     return _client
 
 
-def answer(query: str, k: int = TOP_K) -> str:
-    context = retrieve(query, k=k)
+def generate(query: str, context: list[dict]) -> str:
+    """Build the prompt from ALREADY-retrieved context and call Gemini.
+
+    Split out from answer() so callers who already have context (the API,
+    which retrieves once and needs the chunks for citations too) don't pay
+    for a second, redundant retrieval call.
+    """
     prompt = build_prompt(query, context)
     response = _get_client().models.generate_content(model=GEMINI_MODEL, contents=prompt)
     return response.text
 
 
+def answer(query: str, mode: str = "dense", k: int = TOP_K) -> str:
+    """Convenience one-shot wrapper for CLI/manual use: retrieve THEN generate.
+
+    Now correctly goes through the unified retrieve() dispatcher, so mode
+    actually does something (previously hardcoded to dense-only).
+    """
+    context = retrieve(query, mode=mode, k=k)
+    return generate(query, context)
+
+
 if __name__ == "__main__":
     question = input("Ask a question: ")
-    print("\n" + answer(question))
+    print("\n" + answer(question, mode="hybrid"))

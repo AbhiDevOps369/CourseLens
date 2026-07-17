@@ -1,31 +1,29 @@
-"""FastAPI serving layer.  [TO BUILD — roadmap Phase 5]
+from fastapi import FastAPI
+from pydantic import BaseModel
+from courselens.retrieval import retrieve
+from courselens.generation.answer import generate
+import time
 
-Turn the scripts into a system:
-    POST /ask   {"question": str, "mode": str}
-        -> {answer, citations, retrieved_chunks, latency_ms}
-    GET  /health
+app = FastAPI(title="CourseLens")
 
-Load the index once at startup (not per request). Add basic error handling
-(Ollama down, empty retrieval). Then Dockerize (Phase 5).
+class AskRequest(BaseModel):
+    question: str
+    mode: str = "dense"
 
-Starter skeleton below — flesh it out when you reach Phase 5.
-"""
-# from fastapi import FastAPI
-# from pydantic import BaseModel
-# from courselens.generation.answer import answer
-#
-# app = FastAPI(title="CourseLens")
-#
-# class AskRequest(BaseModel):
-#     question: str
-#     mode: str = "dense"
-#
-# @app.get("/health")
-# def health():
-#     return {"status": "ok"}
-#
-# @app.post("/ask")
-# def ask(req: AskRequest):
-#     return {"answer": answer(req.question)}
+@app.get("/health")
+def health():
+    return {"status":"ok"}
 
-raise NotImplementedError("Build the FastAPI service here — roadmap Phase 5.")
+@app.post("/ask")
+def ask(req: AskRequest):
+    start=time.perf_counter()
+    chunks = retrieve(req.question,mode=req.mode)
+    result= generate(req.question,chunks)
+    citations=[]
+    for ch in chunks:
+        citations.append({
+            "id": ch["id"], "video_id": ch["video_id"],
+             "start": ch["start"], "end": ch["end"],
+        })
+    end=(time.perf_counter() - start)* 1000
+    return {"answer": result,"citations":citations,"latency_ms":end,"retrieved_chunks":chunks}

@@ -11,5 +11,6 @@ google-genai
 chromadb              # Phase 1: real vector store
 rank-bm25             # Phase 1 build / Phase 2 query: sparse/BM25 retrieval
 sentence-transformers  # Phase 2: cross-encoder reranker
-# fastapi               # Phase 5: serving layer
-# uvicorn               # Phase 5: ASGI server
+fastapi               # Phase 5: serving layer
+uvicorn               # Phase 5: ASGI server
+python-dotenv         # Phase 5: load .env into os.environ automatically, no more manual exports

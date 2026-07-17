@@ -1,2 +1,42 @@
-{"question": "EXAMPLE — replace me. What is the useState hook used for?", "expected_chunk_ids": ["01_3"], "answerable": true}
-{"question": "EXAMPLE — an off-topic question to test refusal. What is the capital of France?", "expected_chunk_ids": [], "answerable": false}
+{"question": "Which hook is used to load saved todos from local storage when the application first loads?", "expected_chunk_ids": ["01_20"], "answerable": true}
+{"question": "Can you use multiple useEffect hooks inside a single component in this project?", "expected_chunk_ids": ["01_22"], "answerable": true}
+{"question": "What three basic properties does every todo object have in the Context API todo app?", "expected_chunk_ids": ["01_6"], "answerable": true}
+{"question": "In Redux Toolkit, do you write the full definition of functions like addTodo yourself, unlike the Context API version?", "expected_chunk_ids": ["02_6"], "answerable": true}
+{"question": "After learning about the store and reducer, what two remaining things does the instructor say you need to learn to use Redux in a component?", "expected_chunk_ids": ["02_11"], "answerable": true}
+{"question": "According to the instructor, how common is it for a single application to use more than one Redux store?", "expected_chunk_ids": ["03_8"], "answerable": true}
+{"question": "What three main things do you provide when creating a Redux slice with createSlice?", "expected_chunk_ids": ["03_9"], "answerable": true}
+{"question": "What backend-as-a-service platform is used for the blog project, and what proprietary alternative is it compared to?", "expected_chunk_ids": ["03_19"], "answerable": true}
+{"question": "What prefix must environment variable names start with in a Create React App project?", "expected_chunk_ids": ["04_4"], "answerable": true}
+{"question": "What is the name of the file where Appwrite authentication service code like createAccount and login is written?", "expected_chunk_ids": ["04_16"], "answerable": true}
+{"question": "What is the first thing you create to connect to Appwrite, before you can create an account service?", "expected_chunk_ids": ["04_18"], "answerable": true}
+{"question": "What field is compulsory to pass first to Appwrite's account creation method, which is easy to miss if you rely only on autocomplete?", "expected_chunk_ids": ["04_21"], "answerable": true}
+{"question": "What three ids must you pass when creating a new document (post) in Appwrite's database?", "expected_chunk_ids": ["05_1"], "answerable": true}
+{"question": "What value does getPost return when no matching post is found?", "expected_chunk_ids": ["05_5"], "answerable": true}
+{"question": "Which package does configureStore come from when setting up the Redux store — Redux itself or react-redux?", "expected_chunk_ids": ["05_12"], "answerable": true}
+{"question": "What happens to the status field in the auth slice's state when the login action is dispatched?", "expected_chunk_ids": ["05_13"], "answerable": true}
+{"question": "Which Appwrite method is used to check whether a user is currently logged in and fetch their session data?", "expected_chunk_ids": ["06_29"], "answerable": true}
+{"question": "How commonly used is the forwardRef hook according to the instructor, and is it documented on the official react.dev site?", "expected_chunk_ids": ["06_13"], "answerable": true}
+{"question": "What two props does the custom Select component require at minimum?", "expected_chunk_ids": ["06_19"], "answerable": true}
+{"question": "What special syntax does Appwrite use for a document's ID field instead of a plain id key?", "expected_chunk_ids": ["06_23"], "answerable": true}
+{"question": "What is the name of the Appwrite auth method used to register a new user during signup, and what three inputs does it need?", "expected_chunk_ids": ["07_10"], "answerable": true}
+{"question": "Which react-router-dom hook is used to redirect the user programmatically, and what is it explicitly not called?", "expected_chunk_ids": ["07_15"], "answerable": true}
+{"question": "What comment count target does the instructor mention for the video covering the RTE (rich text editor)?", "expected_chunk_ids": ["07_20"], "answerable": true}
+{"question": "Besides register and handleSubmit, name two other capabilities react-hook-form's useForm provides.", "expected_chunk_ids": ["07_26"], "answerable": true}
+{"question": "How is an uploaded file's unique ID captured and stored when creating a post with a featured image?", "expected_chunk_ids": ["08_5"], "answerable": true}
+{"question": "What is the name of the file created for editing an existing post, and which two hooks does it rely on to load the post?", "expected_chunk_ids": ["08_16"], "answerable": true}
+{"question": "What component replaces directly rendering App in main.jsx once routing is introduced?", "expected_chunk_ids": ["08_20"], "answerable": true}
+{"question": "Explain the full local-storage flow for todos: how are they loaded on first render, and how are they saved back whenever they change?", "expected_chunk_ids": ["01_20", "01_22"], "answerable": true}
+{"question": "Walk through setting up the auth Redux store: how is the store created, and what happens to state when a user logs in?", "expected_chunk_ids": ["05_12", "05_13"], "answerable": true}
+{"question": "Describe the full account-creation flow in Appwrite: what client setup happens first, and what fields are required in the create call?", "expected_chunk_ids": ["04_18", "04_21"], "answerable": true}
+{"question": "How does calling getCurrentUser connect to updating the Redux auth store with the logged-in user's data?", "expected_chunk_ids": ["06_29", "05_13"], "answerable": true}
+{"question": "Compare how reducer functions like addTodo are handled in the Context API version versus the Redux Toolkit version of the todo app.", "expected_chunk_ids": ["01_6", "02_6"], "answerable": true}
+{"question": "How does the edit-post page load an existing post using the slug, and how does the app decide between creating a new post versus updating an existing one?", "expected_chunk_ids": ["08_16", "08_1"], "answerable": true}
+{"question": "Trace the full flow of uploading a featured image and linking it to a new post record.", "expected_chunk_ids": ["08_5", "05_1"], "answerable": true}
+{"question": "How does routing evolve from rendering App directly to using nested routes with a protected auth layout?", "expected_chunk_ids": ["08_20", "08_21"], "answerable": true}
+{"question": "What is the best recipe for chocolate chip cookies?", "expected_chunk_ids": [], "answerable": false}
+{"question": "Who won the FIFA World Cup in 2022?", "expected_chunk_ids": [], "answerable": false}
+{"question": "How do I file my income taxes in the United States?", "expected_chunk_ids": [], "answerable": false}
+{"question": "What is the boiling point of water at sea level?", "expected_chunk_ids": [], "answerable": false}
+{"question": "Can you recommend a good workout routine for building muscle?", "expected_chunk_ids": [], "answerable": false}
+{"question": "What is the current price of Bitcoin?", "expected_chunk_ids": [], "answerable": false}
+{"question": "What is the capital of France?", "expected_chunk_ids": [], "answerable": false}

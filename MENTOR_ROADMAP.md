@@ -96,12 +96,14 @@ Why this plan beats the alternatives:
 frontend UI beyond a minimal demo (you already have a frontend project), agents,
 fine-tuning, GraphRAG, auth, deployment to cloud, Kubernetes.
 
-**Conditionally in scope:** multimodal (visual) retrieval — see the **Optional Stretch
-Track: Multimodal Retrieval** in Part 4. It is NOT part of the core 12-hour commitment.
-Only start it if Phases 0–7 are done with real time left over, or if a follow-up session
-is used to extend the project. The core plan (text-only, evaluation-driven, hybrid
-retrieval) must be fully working and measured first — multimodal is additive polish on
-top of a working, proven system, never a replacement for one.
+**Committed, but scheduled as its own session:** multimodal (visual/OCR) retrieval — see
+**Part 4B: Multimodal Retrieval** below. This is no longer a "nice to have if time
+permits" stretch goal — it's a required part of the project. What changed is *sequencing*:
+it gets its own dedicated day (own preprocessing, own tuning loop, own eval subset)
+instead of being squeezed alongside Phase 4/5 work. The core plan (text-only,
+evaluation-driven, hybrid retrieval, API) must be fully working and measured first —
+not because OCR is optional, but because OCR's own eval numbers need a clean baseline to
+compare against.
 
 ---
 
@@ -287,7 +289,7 @@ The README is what gets read in the 45 seconds a recruiter/interviewer gives you
 
 ---
 
-## PART 4B — Optional Stretch Track: Multimodal (Visual) Retrieval
+## PART 4B — Dedicated Track: Multimodal (Visual) Retrieval (own session, not a stretch goal)
 
 **Why this exists:** the core plan (Parts 2–4 above) upgrades *how well* you search text
 — it doesn't change *what* you can search. Right now the system only "hears" the video;
@@ -303,10 +305,9 @@ core system (text RAG + eval + API) already works end-to-end. Never let this blo
 into Phase 3/4 (evaluation) time — evaluation is still what gets you the interview;
 multimodal is what makes the interview memorable.
 
-**Do NOT attempt this if:**
-- Phases 0–5 aren't done and demoed working, OR
-- You're already past hour 10 in a single 12-hour session (do it in a follow-up session
-  instead — it's fully separable and doesn't touch anything already shipped).
+**Run this as its own dedicated day, after Phases 0–5 are done and demoed working.**
+It's fully separable and doesn't touch anything already shipped — that's exactly why
+it's safe to schedule separately instead of cramming it in.
 
 ### Step-by-step build
 
