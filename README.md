@@ -50,7 +50,8 @@ golden_set.jsonl (42 hand-verified Q&A pairs: 35 answerable, 7 unanswerable)
 | **Hybrid (RRF)** ⭐  | 0.771    | **0.571** | **0.652** |
 | Hybrid + reranker    | 0.771    | 0.486 | 0.614  |
 
-**Hybrid (BM25 + dense, fused via RRF) is what ships.** The cross-encoder reranker
+**Hybrid (BM25 + dense, fused via RRF) is what ships.** 
+ The cross-encoder reranker
 (`BAAI/bge-reranker-base`) was built and evaluated, not assumed — it *regressed* Hit@1
 (0.571 → 0.486) and added ~5x latency per request (hybrid: ~2.0s observed vs.
 hybrid+rerank: ~10.4s observed, single-request samples). Root cause, found via a
